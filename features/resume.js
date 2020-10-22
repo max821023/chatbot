@@ -1,7 +1,16 @@
+const { BotkitConversation } = require("botkit");
+
 module.exports = function (controller) {
 
-  controller.hears('dog', 'message,direct_message', async (bot, message) => {
-    await bot.reply(message, 'I heard dog.');
+  const conversation = new BotkitConversation('conversation', controller);
+
+  conversation.addMessage('Hello!')
+  conversation.ask('What is your name?', async(response, conversation, bot) => {
+    console.log(`user name is ${ response }`);
+  }, 'name');
+
+  controller.hears('name', 'message,direct_message', async (bot, message) => {
+    await bot.reply(message, resume.basics.name);
   });
 
   // controller.on('message,direct_message', async (bot, message) => {
